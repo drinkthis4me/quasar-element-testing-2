@@ -34,7 +34,7 @@
           </q-item>
         </q-card-section>
         <q-card-section class="q-gutter-xs">
-          <q-btn color="primary" label="reset" />
+          <q-btn color="primary" label="reset" @click="resetTimer" />
           <q-btn color="primary" label="start" @click="startTimer" />
         </q-card-section>
       </div>
@@ -49,7 +49,7 @@ export default {
   setup() {
     const min = ref(0);
     const sec = ref(0);
-    const totalTime = ref(min.value + sec.value)
+    const totalTime = ref(min.value + sec.value);
 
     var countdown;
 
@@ -61,7 +61,7 @@ export default {
       displayTimeLeft(sec);
 
       countdown = setInterval(() => {
-        const secLeft = Math.round(then - now / 1000);
+        const secLeft = Math.round((then - Date.now()) / 1000);
         //display
         if (secLeft < 0) {
           clearInterval(countdown);
@@ -76,13 +76,16 @@ export default {
       const remainderSec = sec % 60;
       const display = `${min} : ${remainderSec < 10 ? "0" : ""}${remainderSec}`;
       document.title = display;
+      console.log(display);
     }
 
     function startTimer() {
-      
-      console.log(totalTime.value)
+      timer(5);
     }
 
+    function resetTimer() {
+      clearInterval(countdown);
+    }
     return {
       min,
       sec,
@@ -90,7 +93,8 @@ export default {
       countdown,
       timer,
       displayTimeLeft,
-      startTimer
+      startTimer,
+      resetTimer,
     };
   },
 };
