@@ -44,8 +44,6 @@
         </q-card-section>
         <q-card-section class="q-gutter-xs">
           <q-btn color="primary" label="start" @click="startTimer" />
-          <q-btn color="primary" label="pause" />
-          <q-btn color="primary" label="reset" />
         </q-card-section>
       </div>
     </q-card>
@@ -53,7 +51,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 
 export default {
   setup() {
@@ -67,32 +65,10 @@ export default {
     const displayHours = ref(0);
     const displayDays = ref(0);
 
-    // var countdown;
-
-    // function startTimer() {
-    //   clearInterval(countdown);
-
-    //   countdown = setInterval(() => {
-    //     if (seconds.value > 0) {
-    //       //decrease seconds
-    //       seconds.value--;
-    //     } else {
-    //       //stop timer
-    //       clearInterval(countdown);
-    //       console.log(countdown);
-    //     }
-    //   }, 1000);
-    // }
-
-    // function resetTimer() {
-    //   clearInterval(countdown);
-    //   displayTimeLeft(5);
-    // }
-
     function startTimer() {
       const timer = setInterval(() => {
         const now = new Date();
-        const end = new Date(2022, 10, 6, 12, 12, 12);
+        const end = new Date(2023, 10, 6, 12, 12, 12);
         const distance = end.getTime() - now.getTime();
 
         if (distance < 0) {
@@ -106,10 +82,13 @@ export default {
           (distance % _minutes.value) / _seconds.value
         );
 
-        displaySeconds.value = seconds < 10 ? `0${seconds}` : seconds;
-        displayMinutes.value = minutes < 10 ? `0${minutes}` : minutes;
-        displayHours.value = hours < 10 ? `0${hours}` : hours;
-        displayDays.value = days < 10 ? `0${days}` : days;
+        function formatNumber(num) {
+          return num < 10 ? `0${num}` : num;
+        }
+        displaySeconds.value = formatNumber(seconds);
+        displayMinutes.value = formatNumber(minutes);
+        displayHours.value = formatNumber(hours);
+        displayDays.value = formatNumber(days);
       }, 1000);
     }
 
