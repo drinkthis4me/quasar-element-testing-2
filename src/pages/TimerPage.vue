@@ -8,34 +8,44 @@
 
         <q-separator />
 
-        <q-card-section class="col timer-select row q-gutter-xs">
-          <q-btn color="primary" icon="add" size="sm" @click="min++" />
+        <!-- <q-card-section class="col timer-select row q-gutter-xs">
+          <q-btn color="primary" icon="add" size="sm" />
+          <q-input type="number" outlined style="max-width: 200px" />
+          <q-btn color="primary" icon="remove" size="sm" />
+          <q-btn
+            color="primary"
+            icon="add"
+            size="sm"
+            @click="displaySeconds++"
+          />
           <q-input
-            v-model.number="min"
+            v-model.number="displaySeconds"
             type="number"
             outlined
             style="max-width: 200px"
           />
-          <q-btn color="primary" icon="remove" size="sm" @click="min--" />
-          <q-btn color="primary" icon="add" size="sm" @click="sec++" />
-          <q-input
-            v-model.number="sec"
-            type="number"
-            outlined
-            style="max-width: 200px"
+          <q-btn
+            color="primary"
+            icon="remove"
+            size="sm"
+            @click="displaySeconds--"
           />
-          <q-btn color="primary" icon="remove" size="sm" @click="sec--" />
-        </q-card-section>
+        </q-card-section> -->
         <q-card-section class="timer-display">
-          <q-item class="text-h1 q-gutter-md">
-            <q-item-section>{{ min }}</q-item-section>
-            <q-item-section>:</q-item-section>
-            <q-item-section>{{ sec }}</q-item-section>
+          <q-item class="text-h4 q-gutter-md">
+            {{ displayDays }}
+            :
+            {{ displayHours }}
+            :
+            {{ displayMinutes }}
+            :
+            {{ displaySeconds }}
           </q-item>
         </q-card-section>
         <q-card-section class="q-gutter-xs">
-          <q-btn color="primary" label="reset" @click="resetTimer" />
           <q-btn color="primary" label="start" @click="startTimer" />
+          <q-btn color="primary" label="pause" />
+          <q-btn color="primary" label="reset" />
         </q-card-section>
       </div>
     </q-card>
@@ -43,58 +53,73 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 export default {
   setup() {
-    const min = ref(0);
-    const sec = ref(0);
-    const totalTime = ref(min.value + sec.value);
+    const _seconds = computed(() => 1000);
+    const _minutes = computed(() => _seconds.value * 60);
+    const _hours = computed(() => _minutes.value * 60);
+    const _days = computed(() => _hours.value * 24);
 
-    var countdown;
+    const displaySeconds = ref(0);
+    const displayMinutes = ref(0);
+    const displayHours = ref(0);
+    const displayDays = ref(0);
 
-    function timer(sec) {
-      clearInterval(countdown);
-      const now = Date.now();
-      const then = now + sec * 1000;
+    // var countdown;
 
-      displayTimeLeft(sec);
+    // function startTimer() {
+    //   clearInterval(countdown);
 
-      countdown = setInterval(() => {
-        const secLeft = Math.round((then - Date.now()) / 1000);
-        //display
-        if (secLeft < 0) {
-          clearInterval(countdown);
-          return;
+    //   countdown = setInterval(() => {
+    //     if (seconds.value > 0) {
+    //       //decrease seconds
+    //       seconds.value--;
+    //     } else {
+    //       //stop timer
+    //       clearInterval(countdown);
+    //       console.log(countdown);
+    //     }
+    //   }, 1000);
+    // }
+
+    // function resetTimer() {
+    //   clearInterval(countdown);
+    //   displayTimeLeft(5);
+    // }
+
+    function startTimer() {
+      const timer = setInterval(() => {
+        const now = new Date();
+        const end = new Date(2022, 10, 6, 12, 12, 12);
+        const distance = end.getTime() - now.getTime();
+
+        if (distance < 0) {
+          clearInterval(timer);
         }
-        displayTimeLeft(secLeft);
+
+        const days = Math.floor(distance / _days.value);
+        const hours = Math.floor((distance % _days.value) / _hours.value);
+        const minutes = Math.floor((distance % _hours.value) / _minutes.value);
+        const seconds = Math.floor(
+          (distance % _minutes.value) / _seconds.value
+        );
+
+        displaySeconds.value = seconds < 10 ? `0${seconds}` : seconds;
+        displayMinutes.value = minutes < 10 ? `0${minutes}` : minutes;
+        displayHours.value = hours < 10 ? `0${hours}` : hours;
+        displayDays.value = days < 10 ? `0${days}` : days;
       }, 1000);
     }
 
-    function displayTimeLeft(sec) {
-      const min = Math.floor(sec / 60);
-      const remainderSec = sec % 60;
-      const display = `${min} : ${remainderSec < 10 ? "0" : ""}${remainderSec}`;
-      document.title = display;
-      console.log(display);
-    }
-
-    function startTimer() {
-      timer(5);
-    }
-
-    function resetTimer() {
-      clearInterval(countdown);
-    }
     return {
-      min,
-      sec,
-      totalTime,
-      countdown,
-      timer,
-      displayTimeLeft,
+      displaySeconds,
+      displayMinutes,
+      displayHours,
+      displayDays,
+
       startTimer,
-      resetTimer,
     };
   },
 };

@@ -8,4 +8,8 @@
   </q-page>
 </template>
 
-<script setup></script>
+<script>
+export default {
+  setup() {},
+};
+</script>

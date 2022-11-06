@@ -184,6 +184,8 @@ export default {
       return rows.reduce((accum, object) => accum + object[key], 0);
     }
 
+
+    
     return {
       columns,
       rows,

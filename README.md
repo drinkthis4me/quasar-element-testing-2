@@ -4,7 +4,7 @@ In the project, I test out quasar element and plugin.
 
 - q-table
 - dialog
-- axios reuest and more
+- axios request and more
 
 ---
 
@@ -39,7 +39,7 @@ To access dialog content, there is additional v-model, otherwise dialog would cl
 ></q-dialog>
 ```
 
-The result is glitchy. Mouse moment must be precise to open and close the dialog. What's worse is that two buttons may open their own dialog and overlap one another.
+The result is glitchy. Mouse moment must be precise to open and close the dialog. What's worse is that two buttons may open their own dialog and overlap each other.
 
 Conclusion: give up on hoverable button or just use pure CSS to control opening/closing.
 
@@ -47,7 +47,7 @@ Conclusion: give up on hoverable button or just use pure CSS to control opening/
 
 ## Gallery
 
-Here I pratice Http request using [Axios](https://github.com/axios/axios).
+Here I pratice http request using [Axios](https://github.com/axios/axios).
 
 Fetch some images from [jsonplaceholder](https://jsonplaceholder.typicode.com) and put them in q-carousel.
 
@@ -76,7 +76,7 @@ Use q-notify to catch response error.
 
 ## Table
 
-Table data is from [Public APIs}(https://github.com/toddmotto/public-apis) using http request.
+Table data is from [Public APIs](https://github.com/toddmotto/public-apis) using http request.
 
 Q-table is all about slots. I have slot for:
 
@@ -88,7 +88,7 @@ Q-table is all about slots. I have slot for:
 
 For editing and creating data, there is a q-dialog for user input.
 
-The dialog is another component with props. Since props is an one-way data flow, the table data cannot be directly edited by the dialog. So I [deep clone](https://lodash.com/docs/#cloneDeep) the props, edit the clone, and emit it to the parent for updating table.
+The dialog is another component with props. Since props is read only, the table data cannot be directly edited by the dialog. So I [deep clone](https://lodash.com/docs/#cloneDeep) the props, edit the clone, and emit it to the parent for updating table.
 
 ```javascript
 const target = ref({});
@@ -110,14 +110,15 @@ When submit, POST the data to [jsonplaceholder](https://jsonplaceholder.typicode
 ---
 
 ## Dessert table
+
 Use financial table to calculate total price.
 
 The data is in an Array. To calculate the total value of a certain key:
 
 ```javascript
-    function sum(key) {
-      return rows.reduce((accum, object) => accum + object[key], 0);
-    }
+function sum(key) {
+  return rows.reduce((accum, object) => accum + object[key], 0);
+}
 ```
 
 ---
