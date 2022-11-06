@@ -2,6 +2,7 @@
   <q-layout view="hhh lpR fff">
     <q-header elevated>
       <q-toolbar>
+        <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="menu" />
         <q-toolbar-title shrink> Quasar App </q-toolbar-title>
         <q-btn to="/" flat round dense icon="home" class="q-mr-sm" />
         <q-separator dark vertical inset />
@@ -19,6 +20,8 @@
       </q-toolbar>
     </q-header>
 
+    <LeftDrawer :projects="projects" v-model="drawerLeft" />
+
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -30,13 +33,15 @@
 import { defineComponent, ref } from "vue";
 import HeaderMenu from "src/components/HeaderMenu.vue";
 import LayoutFooter from "src/components/LayoutFooter.vue";
+import LeftDrawer from "src/components/LeftDrawer.vue";
 
-export default  defineComponent({
+export default defineComponent({
   name: "MainLayout",
 
   components: {
     HeaderMenu,
     LayoutFooter,
+    LeftDrawer,
   },
 
   setup() {
@@ -124,13 +129,25 @@ export default  defineComponent({
       },
     ];
 
-    const newLinkList = linkList.map( 
-      object => ({...object, dialog: false, showCard: false})
-    )
+    const newLinkList = linkList.map((object) => ({
+      ...object,
+      dialog: false,
+      showCard: false,
+    }));
+
+    const projects = [
+      { title: "Gallery", link: "/gallery" },
+      { title: "Table", link: "/table" },
+      { title: "Comment", link: "/comment" },
+      { title: "Dessert", link: "/dessert" },
+      { title: "timer", link: "/timer" },
+    ];
 
     return {
       linkList,
-      newLinkList
+      newLinkList,
+      projects,
+      drawerLeft: ref(false),
     };
   },
 });
