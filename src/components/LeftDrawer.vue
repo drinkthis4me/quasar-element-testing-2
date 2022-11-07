@@ -5,7 +5,7 @@
         <template v-for="item in projects" :key="item.title">
           <q-item clickable v-ripple :to="item.link">
             <q-item-section>
-              {{ item.title }}
+              {{ item.label }}
             </q-item-section>
           </q-item>
         </template>

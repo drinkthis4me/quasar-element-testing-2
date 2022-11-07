@@ -2,10 +2,21 @@
   <q-layout view="hhh lpR fff">
     <q-header elevated>
       <q-toolbar>
-        <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="menu" />
-        <q-toolbar-title shrink> Quasar App </q-toolbar-title>
-        <q-btn to="/" flat round dense icon="home" class="q-mr-sm" />
-        <q-separator dark vertical inset />
+        {{ windowWidth }}
+        <span v-if="windowWidth < 1170" class="row">
+          <q-btn
+            flat
+            @click="drawerLeft = !drawerLeft"
+            round
+            dense
+            icon="menu"
+          />
+          <q-toolbar-title shrink> Quasar App </q-toolbar-title>
+
+          <q-btn to="/" flat round dense icon="home" class="q-mr-sm" />
+        </span>
+
+        <!-- <q-separator dark vertical inset />
         <q-btn to="/gallery" stretch flat label="Gallery" />
         <q-separator dark vertical inset />
         <q-btn to="/table" stretch flat label="Table" />
@@ -14,7 +25,12 @@
         <q-separator dark vertical inset />
         <q-btn to="/dessert" stretch flat label="Dessert" />
         <q-separator dark vertical inset />
-        <q-btn to="/timer" stretch flat label="Timer" />
+        <q-btn to="/timer" stretch flat label="Timer" /> -->
+        <span v-else class="row">
+          <q-toolbar-title shrink> Quasar App </q-toolbar-title>
+          <q-btn to="/" flat round dense icon="home" class="q-mr-sm" />
+          <NavigationBtnVue :projects="projects" />
+        </span>
         <q-space />
         <HeaderMenu :list="newLinkList" />
       </q-toolbar>
@@ -30,10 +46,11 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch, onMounted, onUnmounted } from "vue";
 import HeaderMenu from "src/components/HeaderMenu.vue";
 import LayoutFooter from "src/components/LayoutFooter.vue";
 import LeftDrawer from "src/components/LeftDrawer.vue";
+import NavigationBtnVue from "src/components/NavigationBtn.vue";
 
 export default defineComponent({
   name: "MainLayout",
@@ -42,6 +59,7 @@ export default defineComponent({
     HeaderMenu,
     LayoutFooter,
     LeftDrawer,
+    NavigationBtnVue,
   },
 
   setup() {
@@ -135,19 +153,50 @@ export default defineComponent({
       showCard: false,
     }));
 
-    const projects = [
-      { title: "Gallery", link: "/gallery" },
-      { title: "Table", link: "/table" },
-      { title: "Comment", link: "/comment" },
-      { title: "Dessert", link: "/dessert" },
-      { title: "timer", link: "/timer" },
-    ];
+    const windowWidth = ref(0);
+
+    function updateResize() {
+      windowWidth.value = window.innerWidth;
+    }
+
+    onMounted(
+      updateResize,
+      window.addEventListener("resize", () => {
+        windowWidth.value = window.innerWidth;
+      })
+    );
+
+    onUnmounted(
+      window.removeEventListener("resize", () => {
+        windowWidth.value = window.innerWidth;
+      })
+    );
 
     return {
       linkList,
       newLinkList,
-      projects,
+      projects: [
+        {
+          link: "/gallery",
+          label: "Gallery",
+          value: "gallery",
+        },
+        { link: "/table", label: "Table", value: "table" },
+        {
+          link: "/comment",
+          label: "Comment",
+          value: "comment",
+        },
+        {
+          link: "/dessert",
+          label: "Dessert",
+          value: "dessert",
+        },
+        { link: "/timer", label: "Timer", value: "timer" },
+      ],
       drawerLeft: ref(false),
+      windowWidth,
+      updateResize,
     };
   },
 });
