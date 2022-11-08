@@ -6,7 +6,7 @@ In the project, I test out quasar element and plugin.
 - dialog
 - axios request and more
 
----
+
 
 ## Mega Dropdown Button
 
@@ -43,7 +43,6 @@ The result is glitchy. Mouse moment must be precise to open and close the dialog
 
 Conclusion: give up on hoverable button or just use pure CSS to control opening/closing.
 
----
 
 ## Gallery
 
@@ -72,7 +71,7 @@ Use q-notify to catch response error.
     }
 ```
 
----
+
 
 ## Table
 
@@ -99,7 +98,6 @@ target.value = cloneDeep(props.item);
 <q-btn @click="$emit('update', target)" />
 ```
 
----
 
 ## Comment
 
@@ -107,7 +105,7 @@ Blog comment form. Receive user name, email, and comment.
 
 When submit, POST the data to [jsonplaceholder](https://jsonplaceholder.typicode.com) and display the response in a table.
 
----
+
 
 ## Dessert table
 
@@ -121,7 +119,6 @@ function sum(key) {
 }
 ```
 
----
 
 ## Countdown Timer
 
