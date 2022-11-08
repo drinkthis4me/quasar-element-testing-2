@@ -15,24 +15,20 @@
 
           <q-btn to="/" flat round dense icon="home" class="q-mr-sm" />
         </span>
-
-        <!-- <q-separator dark vertical inset />
-        <q-btn to="/gallery" stretch flat label="Gallery" />
-        <q-separator dark vertical inset />
-        <q-btn to="/table" stretch flat label="Table" />
-        <q-separator dark vertical inset />
-        <q-btn to="/comment" stretch flat label="Comment" />
-        <q-separator dark vertical inset />
-        <q-btn to="/dessert" stretch flat label="Dessert" />
-        <q-separator dark vertical inset />
-        <q-btn to="/timer" stretch flat label="Timer" /> -->
         <span v-else class="row">
           <q-toolbar-title shrink> Quasar App </q-toolbar-title>
           <q-btn to="/" flat round dense icon="home" class="q-mr-sm" />
-          <NavigationBtnVue :projects="projects" />
+          <q-btn
+            v-for="project in projects"
+            :key="project.label"
+            :to="project.link"
+            :label="project.label"
+            flat
+            stretch
+          />
         </span>
         <q-space />
-        <HeaderMenu :list="newLinkList" />
+        <HeaderMenu v-if="windowWidth>800" :list="newLinkList" />
       </q-toolbar>
     </q-header>
 
@@ -50,7 +46,6 @@ import { defineComponent, ref, watch, onMounted, onUnmounted } from "vue";
 import HeaderMenu from "src/components/HeaderMenu.vue";
 import LayoutFooter from "src/components/LayoutFooter.vue";
 import LeftDrawer from "src/components/LeftDrawer.vue";
-import NavigationBtnVue from "src/components/NavigationBtn.vue";
 
 export default defineComponent({
   name: "MainLayout",
@@ -59,10 +54,10 @@ export default defineComponent({
     HeaderMenu,
     LayoutFooter,
     LeftDrawer,
-    NavigationBtnVue,
   },
 
   setup() {
+    // Array for topright button
     const linkList = [
       {
         id: 1,
@@ -146,13 +141,13 @@ export default defineComponent({
         children: [],
       },
     ];
-
     const newLinkList = linkList.map((object) => ({
       ...object,
       dialog: false,
       showCard: false,
     }));
 
+    // resizing window to make sidedrawer appear
     const windowWidth = ref(0);
 
     function updateResize() {
