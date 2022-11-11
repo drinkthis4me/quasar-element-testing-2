@@ -124,4 +124,4 @@ function sum(key) {
 
 Final result is [Interval Timer](https://play.google.com/store/apps/details?id=cc.dreamspark.intervaltimer) on Google play.
 
-I am still working on it.
+Work in progress
