@@ -11,24 +11,46 @@
             dense
             icon="menu"
           />
-          <q-toolbar-title shrink> Quasar App </q-toolbar-title>
-
-          <q-btn to="/" flat round dense icon="home" class="q-mr-sm" />
+          <q-btn
+            to="/"
+            flat
+            strech
+            dense
+            icon="home"
+            label="Quasar App"
+            class="q-mr-sm"
+          />
         </span>
         <span v-else class="row">
-          <q-toolbar-title shrink> Quasar App </q-toolbar-title>
-          <q-btn to="/" flat round dense icon="home" class="q-mr-sm" />
           <q-btn
+            to="/"
+            flat
+            strech
+            dense
+            icon="home"
+            label="Quasar App"
+            class="q-mr-sm"
+          />
+          <!-- <q-btn
             v-for="project in projects"
             :key="project.label"
             :to="project.link"
             :label="project.label"
             flat
             stretch
-          />
+          /> -->
+          <q-tabs>
+            <q-route-tab
+              v-for="project in projects"
+              :key="project.label"
+              :to="project.link"
+              :label="project.label"
+              exact
+            />
+          </q-tabs>
         </span>
         <q-space />
-        <HeaderMenu v-if="windowWidth>800" :list="newLinkList" />
+        <HeaderMenu v-if="windowWidth > 800" :list="newLinkList" />
       </q-toolbar>
     </q-header>
 
@@ -42,7 +64,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch, onMounted, onUnmounted } from "vue";
+import { defineComponent, ref,onMounted, onUnmounted } from "vue";
 import HeaderMenu from "src/components/HeaderMenu.vue";
 import LayoutFooter from "src/components/LayoutFooter.vue";
 import LeftDrawer from "src/components/LeftDrawer.vue";
@@ -147,7 +169,7 @@ export default defineComponent({
       showCard: false,
     }));
 
-    // resizing window to make sidedrawer appear
+    // resizing window to make leftDrawer appear
     const windowWidth = ref(0);
 
     function updateResize() {

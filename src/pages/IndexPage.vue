@@ -5,6 +5,7 @@
       src="~assets/quasar-logo-vertical.svg"
       style="width: 200px; height: 200px"
     />
+    <div class="text-h3">https://github.com/drinkthis4me</div>
   </q-page>
 </template>
 
