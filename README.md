@@ -1,14 +1,29 @@
-# quasar element testing
+# Quasar element testing
 
-In the project, I test out quasar element and plugin.
+In this learning project, I tested out some quasar elements and plugins.
 
-- q-table
-- dialog
-- axios request and more
+## Table of Contents
 
+- [Quasar element testing](#quasar-element-testing)
+  - [Table of Contents](#table-of-contents)
+- [Install \& run](#install--run)
+- [Mega Dropdown](#mega-dropdown)
+- [Gallery](#gallery)
+- [Table](#table)
+- [Math table](#math-table)
+- [Comment](#comment)
+- [Countdown Timer](#countdown-timer)
 
+# Install & run
 
-## Mega Dropdown Button
+In terminal:
+
+```bash
+npm install
+quasar dev
+```
+
+# Mega Dropdown
 
 On the top right of the header, I set up some button which can be opened with mouse hovering.
 
@@ -43,8 +58,7 @@ The result is glitchy. Mouse moment must be precise to open and close the dialog
 
 Conclusion: give up on hoverable button or just use pure CSS to control opening/closing.
 
-
-## Gallery
+# Gallery
 
 Here I pratice http request using [Axios](https://github.com/axios/axios).
 
@@ -71,13 +85,11 @@ Use q-notify to catch response error.
     }
 ```
 
-
-
-## Table
+# Table
 
 Table data is from [Public APIs](https://github.com/toddmotto/public-apis) using http request.
 
-Q-table is all about slots. I have slot for:
+Q-table is all about slots. Here are slots for:
 
 - Search filter on the top right
 - No data message
@@ -98,16 +110,7 @@ target.value = cloneDeep(props.item);
 <q-btn @click="$emit('update', target)" />
 ```
 
-
-## Comment
-
-Blog comment form. Receive user name, email, and comment.
-
-When submit, POST the data to [jsonplaceholder](https://jsonplaceholder.typicode.com) and display the response in a table.
-
-
-
-## Dessert table
+# Math table
 
 Use financial table to calculate total price.
 
@@ -119,9 +122,19 @@ function sum(key) {
 }
 ```
 
+# Comment
 
-## Countdown Timer
+Blog comment form. Receive user name, email, and comment.
 
-Final result is [Interval Timer](https://play.google.com/store/apps/details?id=cc.dreamspark.intervaltimer) on Google play.
+When submit, POST the data to [jsonplaceholder](https://jsonplaceholder.typicode.com) and display the response in a table.
 
-Work in progress
+# Countdown Timer
+
+Mocking: [Interval Timer](https://play.google.com/store/apps/details?id=cc.dreamspark.intervaltimer) on Google play.
+
+Timer with Start/ Pause/ Reset buttons.
+
+Click on text to edit Minutes/ Seconds/ Looping in dialog.
+
+For more detail explanation:
+Please find code comments in src/pages/TimerPage.vue
