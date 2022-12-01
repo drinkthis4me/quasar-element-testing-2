@@ -4,17 +4,16 @@ In this learning project, I tested out some quasar elements and plugins.
 
 ## Table of Contents
 
-- [Quasar element testing](#quasar-element-testing)
-  - [Table of Contents](#table-of-contents)
+
 - [Install \& run](#install--run)
 - [Mega Dropdown](#mega-dropdown)
 - [Gallery](#gallery)
 - [Table](#table)
-- [Math table](#math-table)
+- [Math Table](#math-table)
 - [Comment](#comment)
 - [Countdown Timer](#countdown-timer)
 
-# Install & run
+# Install & Run
 
 In terminal:
 
@@ -110,7 +109,7 @@ target.value = cloneDeep(props.item);
 <q-btn @click="$emit('update', target)" />
 ```
 
-# Math table
+# Math Table
 
 Use financial table to calculate total price.
 
