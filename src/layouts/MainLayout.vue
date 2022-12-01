@@ -1,23 +1,43 @@
 <template>
   <q-layout view="hhh lpR fff">
     <q-header elevated>
-      <q-toolbar>
-        <q-toolbar-title shrink> Quasar App </q-toolbar-title>
-        <q-btn to="/" flat round dense icon="home" class="q-mr-sm" />
-        <q-separator dark vertical inset />
-        <q-btn to="/gallery" stretch flat label="Gallery" />
-        <q-separator dark vertical inset />
-        <q-btn to="/table" stretch flat label="Table" />
-        <q-separator dark vertical inset />
-        <q-btn to="/comment" stretch flat label="Comment" />
-        <q-separator dark vertical inset />
-        <q-btn to="/dessert" stretch flat label="Dessert" />
-        <q-separator dark vertical inset />
-        <q-btn to="/timer" stretch flat label="Timer" />
+      <q-toolbar class="bg-cyan text-white">
+        <q-btn
+          flat
+          @click="drawerLeft = !drawerLeft"
+          round
+          dense
+          icon="menu"
+          class="lt-md"
+        />
+
+        <q-btn
+          to="/"
+          flat
+          strech
+          dense
+          icon="home"
+          label="Home"
+          class="q-mr-sm"
+        />
+        <q-tabs class="gt-sm">
+          <q-route-tab
+            v-for="project in projects"
+            :key="project.label"
+            :to="project.link"
+            :label="project.label"
+            exact
+          />
+        </q-tabs>
+
         <q-space />
-        <HeaderMenu :list="newLinkList" />
+        <span class="gt-lg">
+          <HeaderMenu :list="newLinkList" />
+        </span>
       </q-toolbar>
     </q-header>
+
+    <LeftDrawer :projects="projects" v-model="drawerLeft" />
 
     <q-page-container>
       <router-view />
@@ -27,19 +47,22 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted, onUnmounted } from "vue";
 import HeaderMenu from "src/components/HeaderMenu.vue";
 import LayoutFooter from "src/components/LayoutFooter.vue";
+import LeftDrawer from "src/components/LeftDrawer.vue";
 
-export default  defineComponent({
+export default defineComponent({
   name: "MainLayout",
 
   components: {
     HeaderMenu,
     LayoutFooter,
+    LeftDrawer,
   },
 
   setup() {
+    // Array for topright button
     const linkList = [
       {
         id: 1,
@@ -123,14 +146,39 @@ export default  defineComponent({
         children: [],
       },
     ];
+    const newLinkList = linkList.map((object) => ({
+      ...object,
+      dialog: false,
+      showCard: false,
+    }));
 
-    const newLinkList = linkList.map( 
-      object => ({...object, dialog: false, showCard: false})
-    )
+    const projects = [
+      {
+        link: "/gallery",
+        label: "Gallery",
+        value: "gallery",
+      },
+      { link: "/table", label: "Table", value: "table" },
+      {
+        link: "/comment",
+        label: "Comment",
+        value: "comment",
+      },
+      {
+        link: "/dessert",
+        label: "Dessert",
+        value: "dessert",
+      },
+      { link: "/timer", label: "Timer", value: "timer" },
+    ];
+
+    const drawerLeft = ref(false);
 
     return {
       linkList,
-      newLinkList
+      newLinkList,
+      projects,
+      drawerLeft,
     };
   },
 });

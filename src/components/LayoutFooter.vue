@@ -22,3 +22,11 @@
     </q-toolbar>
   </q-footer>
 </template>
+
+<script>
+import { defineComponent, DefineComponent } from "vue";
+
+export default defineComponent({
+  name: "LayoutFooter",
+});
+</script>

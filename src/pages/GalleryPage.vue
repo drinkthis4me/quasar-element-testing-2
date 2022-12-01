@@ -57,9 +57,9 @@ onMounted(() => {
   getPhoto();
 });
 
-async function getPhoto() {
+ function getPhoto() {
   const url = "https://jsonplaceholder.typicode.com/albums/1/photos";
-  await api
+   api
     .get(url)
     .then((response) => {
       photoList.value = response.data;
